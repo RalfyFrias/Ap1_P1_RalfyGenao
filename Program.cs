@@ -1,4 +1,7 @@
 using Ap1_P1_RalfyGenao.Components;
+using Ap1_P1_RalfyGenao.DAL;
+using Ap1_P1_RalfyGenao.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddBlazorBootstrap();
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+builder.Services.AddDbContext<Contexto>(options => options.UseSqlite(ConStr));
+builder.Services.AddScoped<ArticulosServices>();
+builder.Services.AddScoped<Contexto>();
 
 var app = builder.Build();
 
