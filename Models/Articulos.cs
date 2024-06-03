@@ -6,19 +6,14 @@ namespace Ap1_P1_RalfyGenao.Models
     {
         [Key]
         public int ArticuloId { get; set; }
-
-        [Required]
-        public string Descripcion { get; set; }
-        [Required]
-        
+        [Required(ErrorMessage = "La Descripcion es Incorecta")]
+        public string? Descripcion { get; set; }
+        [Required(ErrorMessage = "El Monto es  Incorecto")]
         public int Monto { get; set; }
-        [Required]
-
+        [Required(ErrorMessage = "El Precio es  Incorecto")]
         public int Precio { get; set; }
-        [Required]
-
-        public int Ganancia { get; set; }
-      
+        [Required(ErrorMessage = "La Ganacia  es  Incorecto")]
+        public int Ganacia { get; set;}
 
     }
 
