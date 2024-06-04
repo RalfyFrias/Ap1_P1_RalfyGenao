@@ -16,7 +16,7 @@ namespace Ap1_P1_RalfyGenao.Models
         [Required(ErrorMessage = "El Precio es  Incorecto")]
         public int Precio { get; set; }
         [Required(ErrorMessage = "La Ganacia  es  Incorecto")]
-        public int Ganacia { get; set;}
+        public int Ganancia { get; set;}
 
     }
 
