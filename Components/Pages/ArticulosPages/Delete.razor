@@ -63,7 +63,7 @@
 @code {
     [Parameter]
     public int ArticuloId { get; set; }
-    public Articulos? Articulo { get; set; } // Permitir nulos
+    public Articulos? Articulo { get; set; } 
     List<ToastMessage> MensajeToast = new List<ToastMessage>();
 
     protected override async Task OnInitializedAsync()
@@ -83,7 +83,7 @@
         if (ArticuloId == 0 || Articulo == null)
         {
             Console.Write("El artículo es igual a 0");
-            return; // Salir del método si el ArticuloId es inválido
+            return; 
         }
 
         Console.WriteLine("Eliminando el artículo...");

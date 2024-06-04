@@ -59,9 +59,9 @@
 
             <!-- Ganancia -->
             <div class="mb-3">
-                <label for="Ganacia" class="form-label">Ganacia:</label>
-                <InputNumber @bind-Value="Articulo.Ganacia" class="form-control" />
-                <ValidationMessage For="@(() => Articulo.Ganacia)" />
+                <label for="Ganancia" class="form-label">Ganancia:</label>
+                <InputNumber @bind-Value="Articulo.Ganancia" class="form-control" />
+                <ValidationMessage For="@(() => Articulo.Ganancia)" />
             </div>
 
             <!-- Precio -->
@@ -158,7 +158,7 @@
         {
             var gananciaDeseada = (int)(Articulo.Monto * 0.15m);
             Articulo.Precio = Articulo.Monto + gananciaDeseada;
-            Articulo.Ganacia = gananciaDeseada;
+            Articulo.Ganancia = gananciaDeseada;
         }
         else
         {

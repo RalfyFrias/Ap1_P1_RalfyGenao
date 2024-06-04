@@ -62,7 +62,7 @@
                         <td>@articulo.ArticuloId</td>
                         <td>@articulo.Descripcion</td>
                         <td>@articulo.Monto</td>
-                        <td>@articulo.Ganacia</td>
+                        <td>@articulo.Ganancia</td>
                         <td>@articulo.Precio</td>                      
                         <td>
                             <a href="/Articulo/Edit/@articulo.ArticuloId" style="border: none; background-color: transparent;" class="btn-editar">
@@ -97,7 +97,7 @@
         }
         catch (Exception ex)
         {
-            // Manejo del error inicial
+
             Console.WriteLine($"Error initializing: {ex.Message}");
         }
     }
