@@ -1,0 +1,136 @@
+﻿@page "/Articulos/index"
+@using Ap1_P1_RalfyGenao.Models
+@using Ap1_P1_RalfyGenao.Services
+@inject ArticulosServices articuloService
+@inject NavigationManager navigationManager
+
+<PageTitle>Consulta Artículos</PageTitle>
+
+<EditForm Model="ListaArticulos" class="border shadow-lg p-3 rounded">
+    <div class="card-header bg-primary text-white text-center py-2 rounded">
+        <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Consulta Artículos</h3>
+    </div>
+
+    <div class="row mb-3 align-items-end">
+        <div class="col-md-3">
+            <label for="Filtro" class="form-label">Filtrar por:</label>
+            <select @bind="filtro" class="form-select">
+                <option value="id">ID</option>
+                <option value="nombre">Nombre</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="ValorFiltro" class="form-label">Búsqueda:</label>
+            <div class="input-group">
+                <input @bind="valorFiltro" class="form-control" placeholder="Buscar" />
+                <button @onclick="Buscar" class="btn btn-outline-primary" type="button">
+                    <span class="bi bi-search"></span> Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 text-end">
+                <a href="Articulos/Create" class="btn btn-success" type="button">
+                    <span class=""></span> Crear
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>ArticuloId</th>
+                    <th>Descripción</th>
+                    <th>Monto</th>
+                    <th>Ganancia</th>
+                    <th>Precio</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var articulo in ListaArticulos)
+                {
+                    <tr>
+                        <td>@articulo.ArticuloId</td>
+                        <td>@articulo.Descripcion</td>
+                        <td>@articulo.Monto</td>
+                        <td>@articulo.Ganacia</td>
+                        <td>@articulo.Precio</td>                      
+                        <td>
+                            <a href="/Articulo/Edit/@articulo.ArticuloId" style="border: none; background-color: transparent;" class="btn-editar">
+                                <span class="bi bi-pencil-square" style="font-size: 2rem;"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/Articulos/Delete/@articulo.ArticuloId" style="border: none; background-color: transparent;" class="btn-eliminar">
+                                <span class="bi bi-dash-circle-fill" style="font-size: 2rem;"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer text-start">
+        <p>Total de Artículos: @ListaArticulos.Count</p>
+    </div>
+</EditForm>
+
+@code {
+    public List<Articulos> ListaArticulos { get; set; } = new List<Articulos>();
+    private string filtro = "ID";
+    private string valorFiltro;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ListaArticulos = await articuloService.Listar(a => a.ArticuloId > 0);
+        }
+        catch (Exception ex)
+        {
+            // Manejo del error inicial
+            Console.WriteLine($"Error initializing: {ex.Message}");
+        }
+    }
+
+    private async Task Buscar()
+    {
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(valorFiltro))
+            {
+                if (filtro == "ID" && int.TryParse(valorFiltro, out int ArticuloId))
+                {
+                    ListaArticulos = await articuloService.Listar(a => a.ArticuloId == ArticuloId);
+                }
+                else if (filtro == "Descripcion")
+                {
+                    ListaArticulos = await articuloService.Listar(a => a.Descripcion.Contains(valorFiltro, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            else
+            {
+                ListaArticulos = await articuloService.Listar(p => true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error en Buscar(): {ex.Message}");
+            ListaArticulos = new List<Articulos>();
+        }
+    }
+
+    private void IrEliminar(int articuloId)
+    {
+        navigationManager.NavigateTo($"/Articulo/Delete/");
+    }
+}
