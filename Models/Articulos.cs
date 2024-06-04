@@ -6,6 +6,9 @@ namespace Ap1_P1_RalfyGenao.Models
     {
         [Key]
         public int ArticuloId { get; set; }
+
+        public DateTime Fecha { get; set; } 
+
         [Required(ErrorMessage = "La Descripcion es Incorecta")]
         public string? Descripcion { get; set; }
         [Required(ErrorMessage = "El Monto es  Incorecto")]
